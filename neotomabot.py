@@ -123,9 +123,10 @@ def post_tweet():
 			with open('old_results.json', 'w')	as print_file:
 				json.dump(old_files, print_file)
 
-		time.sleep(600) # Tweet every 10 minutes.
+		time.sleep(7200) # Tweet every 10 minutes.
 		
-		if len(to_print) < 5:
+		# A bit random, but once a day check for new records.
+		if random.randint(0,12) == 1:
 			check_neotoma()
 
 post_tweet()
