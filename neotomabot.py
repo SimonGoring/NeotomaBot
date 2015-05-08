@@ -95,10 +95,13 @@ def post_tweet():
 	while len(to_print) > 0:
 		weblink = 'http://apps.neotomadb.org/Explorer/?datasetid=' + str(to_print[0]["DatasetID"])
 		
-		line = 'Neotoma welcomes another ' + to_print[0]["DatabaseName"] + ' dataset: ' + to_print[0]["SiteName"] + " from " + to_print[0]["Investigator"] + " " + weblink
+		#  The datasets have long names.  I want to match to simplify:
+		
+		
+		line = 'Neotoma welcomes ' + to_print[0]["SiteName"] + ', a ' + to_print[0]["DatasetType"] + ' dataset by ' + to_print[0]["Investigator"] + " " + weblink
 		
 		if len(line) > 170:
-			line = 'Neotoma welcomes another dataset: ' + to_print[0]["SiteName"] + " from " + to_print[0]["Investigator"] + " " + weblink
+			line = 'Neotoma welcomes ' + to_print[0]["SiteName"] + " by " + to_print[0]["Investigator"] + " " + weblink
 						
 		print('%s' % line)
 		
