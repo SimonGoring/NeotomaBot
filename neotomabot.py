@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 #!python3
 
-import tweepy, time, sys, json, requests, random, imp
+import tweepy, time, sys, json, requests, random, imp, datetime
  
 def check_neotoma():
     ## This function call to neotoma, reads a text file, compares the two
@@ -93,27 +93,27 @@ def post_tweet():
 		
 	#  Now loop through the records:
 	while len(to_print) > 0:
+		#  flags
+		message_flag = 0
+		check_flag   = 0
+		
 		weblink = 'http://apps.neotomadb.org/Explorer/?datasetid=' + str(to_print[0]["DatasetID"])
 		
 		#  The datasets have long names.  I want to match to simplify:
-		
-		
+				
 		line = 'Neotoma welcomes ' + to_print[0]["SiteName"] + ', a ' + to_print[0]["DatasetType"] + ' dataset by ' + to_print[0]["Investigator"] + " " + weblink
 		
 		if len(line) > 170:
 			line = 'Neotoma welcomes ' + to_print[0]["SiteName"] + " by " + to_print[0]["Investigator"] + " " + weblink
-						
-		print('%s' % line)
-		
-		message_flag = 0
-		
-		if random.randint(0,30) == 10 and message_flag == 0:
+
+
+		if datetime.datetime.now().minute % 60 == 0 and message_flag == 0 and datetime.datetime.now().hour % 12:
+			# Every 12 hours identify myself.
 			line = 'This twitter bot for the Neotoma Paleoecological Database is managed by @sjgoring. Letting you know what\'s new at http://neotomadb.org'
 			api.update_status(status=line)
 			message_flag = 1
-		else:
+		elif datetime.datetime.now().minute % 60 == 0: # tweet on the hour.
 			api.update_status(status=line)
-			message_flag = 0
 
 			#  Add the tweeted site to `old_files` and then delete it from the to_print.
 			old_files.append(to_print[0])
@@ -125,11 +125,43 @@ def post_tweet():
 
 			with open('old_results.json', 'w')	as print_file:
 				json.dump(old_files, print_file)
+				
+			while datetime.datetime.now().minute % 60 == 0:
+				i = 1
+									
+			print('%s' % line)
+			message_flag = 0
+			
 
-		time.sleep(7200) # Tweet every 10 minutes.
-		
-		# A bit random, but once a day check for new records.
-		if random.randint(0,12) == 1:
+		# Check for new records every four hours:
+		if datetime.datetime.now().minute % 60 == 0 and datetime.datetime.now().hour % 4 == 0 and check_flag == 0:
 			check_neotoma()
+			
+			# reload files:
+			old_toprint = to_print
+			with open('to_print.json', 'r') as print_file:
+				to_print  = json.loads(print_file.read())
+			
+			with open('old_results.json', 'r') as print_file:
+				old_files  = json.loads(print_file.read())
+		
+			print('Neotoma dataset updated.\n')
+			if (len(to_print) - len(old_toprint)) == 1:
+				line = "I've got a backlog of " + len(to_print) + " sites to tweet and " + len(to_print) - len(old_toprint) + " site has been added since I last checked Neotoma. http://neotomadb.org"
+			elif (len(to_print) - len(old_toprint)) > 1:
+				line = "I've got a backlog of " + len(to_print) + " sites to tweet and " + len(to_print) - len(old_toprint) + " sites have been added since I last checked Neotoma. http://neotomadb.org"
+			else:
+				line = "I've got a backlog of " + len(to_print) + " sites to tweet.  Nothing new has been added since I last checked. http://neotomadb.org"
+			
+			check_flag = 1
+		
+		#  Clearing the check flag.	 This is probably inelegant, but I'm still just learning python :)
+		if datetime.datetime.now().minute % 60 == 0 and datetime.datetime.now().hour % 4 == 0 and check_flag == 1:
+			while datetime.datetime.now().minute % 60 == 0 and datetime.datetime.now().hour % 4 == 0 and check_flag == 1:
+				i = 1
+			check_flag = 0
+		else:
+			check_flag = 0
+			
 
 post_tweet()
