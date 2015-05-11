@@ -147,11 +147,12 @@ def post_tweet():
 		
 			print('Neotoma dataset updated.\n')
 			if (len(to_print) - len(old_toprint)) == 1:
-				line = "I've got a backlog of " + len(to_print) + " sites to tweet and " + len(to_print) - len(old_toprint) + " site has been added since I last checked Neotoma. http://neotomadb.org"
+				#  If only a single site has been added:
+				line = "I've got a backlog of " + str(len(to_print)) + " sites to tweet and " + str(len(to_print) - len(old_toprint)) + " site has been added since I last checked Neotoma. http://neotomadb.org"
 			elif (len(to_print) - len(old_toprint)) > 1:
-				line = "I've got a backlog of " + len(to_print) + " sites to tweet and " + len(to_print) - len(old_toprint) + " sites have been added since I last checked Neotoma. http://neotomadb.org"
+				line = "I've got a backlog of " + str(len(to_print)) + " sites to tweet and " + str(len(to_print) - len(old_toprint)) + " sites have been added since I last checked Neotoma. http://neotomadb.org"
 			else:
-				line = "I've got a backlog of " + len(to_print) + " sites to tweet.  Nothing new has been added since I last checked. http://neotomadb.org"
+				line = "I've got a backlog of " + str(len(to_print)) + " sites to tweet.  Nothing new has been added since I last checked. http://neotomadb.org"
 			
 			check_flag = 1
 		
