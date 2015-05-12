@@ -106,13 +106,13 @@ def post_tweet():
 		if len(line) > 170:
 			line = 'Neotoma welcomes ' + to_print[0]["SiteName"] + " by " + to_print[0]["Investigator"] + " " + weblink
 
-
-		if datetime.datetime.now().minute % 60 == 0 and message_flag == 0 and datetime.datetime.now().hour % 12:
-			# Every 12 hours identify myself.
+		if datetime.datetime.now().minute % 60 == 0 and message_flag == 0 and datetime.datetime.now().hour == 1:
+			# Every 24 hours (at 1am) identify myself.
 			line = 'This twitter bot for the Neotoma Paleoecological Database is managed by @sjgoring. Letting you know what\'s new at http://neotomadb.org'
 			api.update_status(status=line)
 			message_flag = 1
-		elif datetime.datetime.now().minute % 60 == 0: # tweet on the hour.
+			
+		elif datetime.datetime.now().minute % 60 == 0 & datetime.datetime.now().hour % 2 == 0: # tweet every other hour
 			api.update_status(status=line)
 
 			#  Add the tweeted site to `old_files` and then delete it from the to_print.
@@ -131,10 +131,9 @@ def post_tweet():
 									
 			print('%s' % line)
 			message_flag = 0
-			
 
-		# Check for new records every four hours:
-		if datetime.datetime.now().minute % 60 == 0 and datetime.datetime.now().hour % 4 == 0 and check_flag == 0:
+		# Check for new records every twelve hours:
+		if datetime.datetime.now().minute % 60 == 0 and datetime.datetime.now().hour % 12 == 0 and check_flag == 0:
 			check_neotoma()
 			
 			# reload files:
@@ -154,6 +153,7 @@ def post_tweet():
 			else:
 				line = "I've got a backlog of " + str(len(to_print)) + " sites to tweet.  Nothing new has been added since I last checked. http://neotomadb.org"
 			
+			api.update_status(status=line)
 			check_flag = 1
 		
 		#  Clearing the check flag.	 This is probably inelegant, but I'm still just learning python :)
