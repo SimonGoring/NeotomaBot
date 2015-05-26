@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 #!python3
 
-import tweepy, time, sys, json, requests, random, imp, datetime
+import tweepy, time, sys, json, requests, random, imp, datetime, schedule, time
  
 def check_neotoma():
     ## This function call to neotoma, reads a text file, compares the two
@@ -65,8 +65,8 @@ def check_neotoma():
     with open('to_print.json', 'w')    as print_file:
         json.dump(inp_json, print_file)
 
-def post_tweet():
-    
+def twit_auth():
+	#  Authenticate the twitter session.  Should only be needed once at the initiation of the code.
 	with open('apikeys.txt', 'r') as read_file:
 		global data
 		data = imp.load_source('data', '', read_file)
@@ -81,8 +81,36 @@ def post_tweet():
 	api = tweepy.API(auth)
 
 	print('Twitter authenticated \n')
+
+def print_neotoma_update():
+	# Check for new records by using the neotoma "recent" API:
+	check_neotoma()
+	
+	# load files:
+	old_toprint = to_print
+	with open('to_print.json', 'r') as print_file:
+		to_print  = json.loads(print_file.read())	
+	with open('old_results.json', 'r') as print_file:
+		old_files  = json.loads(print_file.read())
+
+	print('Neotoma dataset updated.\n')
+	if (len(to_print) - len(old_toprint)) == 1:
+		#  If only a single site has been added:
+		line = "I've got a backlog of " + str(len(to_print)) + " sites to tweet and " + str(len(to_print) - len(old_toprint)) + " site has been added since I last checked Neotoma. http://neotomadb.org"
+	elif (len(to_print) - len(old_toprint)) > 1:
+		line = "I've got a backlog of " + str(len(to_print)) + " sites to tweet and " + str(len(to_print) - len(old_toprint)) + " sites have been added since I last checked Neotoma. http://neotomadb.org"
+	else:
+		line = "I've got a backlog of " + str(len(to_print)) + " sites to tweet.  Nothing new has been added since I last checked. http://neotomadb.org"
+	
+	print('%s' % line)
+	try:
+		print('%s' % line)
+		api.update_status(status=line)
+	except tweepy.error.TweepError:
+		print("Twitter error raised")
 		
-		# Read in the printable tweets:
+def post_tweet():
+	# Read in the printable tweets:
 	with open('to_print.json', 'r') as print_file:
 		to_print  = json.loads(print_file.read())
 			
@@ -91,78 +119,68 @@ def post_tweet():
 		
 	print('Files opened\n')
 		
-	#  Now loop through the records:
-	while len(to_print) > 0:
-		#  flags
-		message_flag = 0
-		check_flag   = 0
+	#  Get ready to print the first [0] record in to_print:
+	weblink = 'http://apps.neotomadb.org/Explorer/?datasetid=' + str(to_print[0]["DatasetID"])
 		
-		weblink = 'http://apps.neotomadb.org/Explorer/?datasetid=' + str(to_print[0]["DatasetID"])
-		
-		#  The datasets have long names.  I want to match to simplify:
+	#  The datasets have long names.  I want to match to simplify:
 				
-		line = 'Neotoma welcomes ' + to_print[0]["SiteName"] + ', a ' + to_print[0]["DatasetType"] + ' dataset by ' + to_print[0]["Investigator"] + " " + weblink
+	line = 'Neotoma welcomes ' + to_print[0]["SiteName"] + ', a ' + to_print[0]["DatasetType"] + ' dataset by ' + to_print[0]["Investigator"] + " " + weblink
 		
-		if len(line) > 170:
-			line = 'Neotoma welcomes ' + to_print[0]["SiteName"] + " by " + to_print[0]["Investigator"] + " " + weblink
-
-		if datetime.datetime.now().minute % 60 == 0 and message_flag == 0 and datetime.datetime.now().hour == 1:
-			# Every 24 hours (at 1am) identify myself.
-			line = 'This twitter bot for the Neotoma Paleoecological Database is managed by @sjgoring. Letting you know what\'s new at http://neotomadb.org'
-			api.update_status(status=line)
-			message_flag = 1
-			
-		elif datetime.datetime.now().minute % 60 == 0 & datetime.datetime.now().hour % 2 == 0: # tweet every other hour
-			api.update_status(status=line)
-
-			#  Add the tweeted site to `old_files` and then delete it from the to_print.
-			old_files.append(to_print[0])
-
-			del to_print[0]
-
-			with open('to_print.json', 'w')	as print_file:
-				json.dump(to_print, print_file)
-
-			with open('old_results.json', 'w')	as print_file:
-				json.dump(old_files, print_file)
-				
-			while datetime.datetime.now().minute % 60 == 0:
-				i = 1
-									
-			print('%s' % line)
-			message_flag = 0
-
-		# Check for new records every twelve hours:
-		if datetime.datetime.now().minute % 60 == 0 and datetime.datetime.now().hour % 12 == 0 and check_flag == 0:
-			check_neotoma()
-			
-			# reload files:
-			old_toprint = to_print
-			with open('to_print.json', 'r') as print_file:
-				to_print  = json.loads(print_file.read())
-			
-			with open('old_results.json', 'r') as print_file:
-				old_files  = json.loads(print_file.read())
+	#  There's a few reasons why the name might be very long, one is the site name, the other is the author name:
+	if len(line) > 170:
+		line = 'Neotoma welcomes ' + to_print[0]["SiteName"] + " by " + to_print[0]["Investigator"] + " " + weblink
+	
+	#  If it's still too long then clip the author list:
+	if len(line) > 170 & to_print[0]["Investigator"].find(','):
+		author = to_print[0]["Investigator"][0:to_print[0]["Investigator"].find(',')]
+		line = 'Neotoma welcomes ' + to_print[0]["SiteName"] + " by " + author + " et al. " + weblink	
 		
-			print('Neotoma dataset updated.\n')
-			if (len(to_print) - len(old_toprint)) == 1:
-				#  If only a single site has been added:
-				line = "I've got a backlog of " + str(len(to_print)) + " sites to tweet and " + str(len(to_print) - len(old_toprint)) + " site has been added since I last checked Neotoma. http://neotomadb.org"
-			elif (len(to_print) - len(old_toprint)) > 1:
-				line = "I've got a backlog of " + str(len(to_print)) + " sites to tweet and " + str(len(to_print) - len(old_toprint)) + " sites have been added since I last checked Neotoma. http://neotomadb.org"
-			else:
-				line = "I've got a backlog of " + str(len(to_print)) + " sites to tweet.  Nothing new has been added since I last checked. http://neotomadb.org"
-			
-			api.update_status(status=line)
-			check_flag = 1
-		
-		#  Clearing the check flag.	 This is probably inelegant, but I'm still just learning python :)
-		if datetime.datetime.now().minute % 60 == 0 and datetime.datetime.now().hour % 4 == 0 and check_flag == 1:
-			while datetime.datetime.now().minute % 60 == 0 and datetime.datetime.now().hour % 4 == 0 and check_flag == 1:
-				i = 1
-			check_flag = 0
-		else:
-			check_flag = 0
-			
+	try:
+		print('%s' % line)
+		api.update_status(status=line)
+		message_flag = 1
+	except tweepy.error.TweepError:
+		print("Twitter error raised")
 
-post_tweet()
+	#  Add the tweeted site to `old_files` and then delete it from the to_print.
+	old_files.append(to_print[0])
+
+	del to_print[0]
+
+	with open('to_print.json', 'w')	as print_file:
+		json.dump(to_print, print_file)
+
+	with open('old_results.json', 'w')	as print_file:
+		json.dump(old_files, print_file)
+					
+def self_identify():
+	#  Post the message 
+	with open('apikeys.txt', 'r') as read_file:
+		global data
+		data = imp.load_source('data', '', read_file)
+
+	CONSUMER_KEY = data.CONSUMER_KEY
+	CONSUMER_SECRET = data.CONSUMER_SECRET
+	ACCESS_KEY = data.ACCESS_KEY
+	ACCESS_SECRET = data.ACCESS_SECRET
+	
+	auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
+	auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
+	api = tweepy.API(auth)
+	# Every 24 hours (at 1am) identify myself.
+	line = 'This twitter bot for the Neotoma Paleoecological Database is managed by @sjgoring. Letting you know what\'s new at http://neotomadb.org'
+	try:
+		print('%s' % line)
+		api.update_status(status=line)
+	except tweepy.error.TweepError:
+		print("Twitter error raised")
+
+twit_auth()
+	
+schedule.every().hour.do(post_tweet)
+schedule.every().day.at("10:30").do(print_neotoma_update)
+schedule.every().day.at("14:30").do(self_identify)
+
+while 1:
+    schedule.run_pending()
+    time.sleep(1)
