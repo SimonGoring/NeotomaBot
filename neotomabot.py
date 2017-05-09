@@ -6,9 +6,6 @@ import tweepy, time, sys, json, requests, random, imp, datetime, schedule, time
 
 def twit_auth():
   #  Authenticate the twitter session.  Should only be needed once at the initiation of the code.
-    with open('apikeys.txt', 'r') as read_file:
-        global data
-        data = imp.load_source('data', '', read_file)
 
     CONSUMER_KEY = os.environ['CONSUMER_KEY']
     CONSUMER_SECRET = os.environ['CONSUMER_SECRET']
