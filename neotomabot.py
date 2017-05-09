@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 #!python3
 
-import os, tweepy, time, sys, json, requests, random, imp, datetime, schedule, time
+import os, tweepy, time, sys, json, requests, random, imp, datetime, schedule, time, random
 
 def twit_auth():
   #  Authenticate the twitter session.  Should only be needed once at the initiation of the code.
@@ -118,28 +118,31 @@ def post_tweet(api):
     old_files  = json.loads(print_file.read())
     
   print('Files opened\n')
-    
+  
+  pr_tw = random.randint(0,len(to_print) - 1)
+  site  = to_print[pr_tw]
+
   #  Get ready to print the first [0] record in to_print:
-  weblink = 'http://apps.neotomadb.org/Explorer/?datasetid=' + str(to_print[0]["DatasetID"])
+  weblink = 'http://apps.neotomadb.org/Explorer/?datasetid=' + str(site["DatasetID"])
     
   #  The datasets have long names.  I want to match to simplify:
         
-  line = 'Neotoma welcomes ' + to_print[0]["SiteName"] + ', a ' + to_print[0]["DatasetType"] + ' dataset by ' + to_print[0]["Investigator"] + " " + weblink
+  line = 'Neotoma welcomes ' + site["SiteName"] + ', a ' + site["DatasetType"] + ' dataset by ' + site["Investigator"] + " " + weblink
     
   #  There's a few reasons why the name might be very long, one is the site name, the other is the author name:
   if len(line) > 170:
-    line = 'Neotoma welcomes ' + to_print[0]["SiteName"] + " by " + to_print[0]["Investigator"] + " " + weblink
+    line = 'Neotoma welcomes ' + site["SiteName"] + " by " + site["Investigator"] + " " + weblink
   
   #  If it's still too long then clip the author list:
-  if len(line) > 170 & to_print[0]["Investigator"].find(','):
-    author = to_print[0]["Investigator"][0:to_print[0]["Investigator"].find(',')]
-    line = 'Neotoma welcomes ' + to_print[0]["SiteName"] + " by " + author + " et al. " + weblink  
+  if len(line) > 170 & site["Investigator"].find(','):
+    author = site["Investigator"][0:to_print[0]["Investigator"].find(',')]
+    line = 'Neotoma welcomes ' + site["SiteName"] + " by " + author + " et al. " + weblink  
     
   try:
     print('%s' % line)
     api.update_status(status=line)
-    old_files.append(to_print[0])
-    del to_print[0]
+    old_files.append(site)
+    del to_print[pr_tw]
     with open('to_print.json', 'w')  as print_file:
       json.dump(to_print, print_file)
     with open('old_results.json', 'w')  as print_file:
@@ -167,12 +170,32 @@ def self_identify_hub(api):
   except tweepy.error.TweepError:
     print("Twitter error raised")
 
+def other_inf_hub(api):
+  # Identify the codebase for the bot:
+  line = ['The bot for the Neotoma Database is programmed in #python and publicly available through an MIT License on GitHub: https://github.com/SimonGoring/neotomabot',
+          'Neotoma has teaching modules you can use in the class room, check it out: https://www.neotomadb.org/education/category/higher_ed/',
+          'The governance for Neotoma includes representatives from our constituent databases. Find out more: https://www.neotomadb.org/about/category/governance',
+          'We are invested in #cyberinfrastructure.  Our response to emerging challenges is posted on @authorea: https://www.authorea.com/users/152134/articles/165940-cyberinfrastructure-in-the-paleosciences-mobilizing-long-tail-data-building-distributed-community-infrastructure-empowering-individual-geoscientists',
+          'We keep a list of all publications that have used Neotoma for their research.  Want to be added?  Contact us! https://www.neotomadb.org/references',
+          'If you use #rstats then you can access Neotoma data directly thanks to @rOpenSci! https://ropensci.org/tutorials/neotoma_tutorial.html',
+          'Neotoma is more than just pollen & mammals it contains 28 data types incl. phytoliths & biochemistry data. Explore! https://www.neotomadb.org/data/category/explorer',
+          'Think you\'ve got better tweets? Add them to my code & make a pull request! ttps://github.com/SimonGoring/neotomabot',
+          'This little bit of #scicomm is brought to you by @sjgoring and #NSFfunded by @nsf_geo & @earthcube.  Thanks for your support!']
+
+  try:
+    print('%s' % line)
+    api.update_status(status=line[random.randint(0,8)])
+  except tweepy.error.TweepError:
+    print("Twitter error raised")
+
 api = twit_auth()
   
 schedule.every(3).hours.do(post_tweet, api)
 schedule.every().day.at("15:37").do(print_neotoma_update, api)
 schedule.every().wednesday.at("14:30").do(self_identify, api)
 schedule.every().monday.at("14:30").do(self_identify_hub, api)
+schedule.every().day.at("10:30").do(other_inf_hub, api)
+
 
 while 1:
     schedule.run_pending()
