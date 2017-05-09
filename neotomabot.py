@@ -10,10 +10,10 @@ def twit_auth():
         global data
         data = imp.load_source('data', '', read_file)
 
-    CONSUMER_KEY = data.CONSUMER_KEY
-    CONSUMER_SECRET = data.CONSUMER_SECRET
-    ACCESS_KEY = data.ACCESS_KEY
-    ACCESS_SECRET = data.ACCESS_SECRET
+    CONSUMER_KEY = os.environ['CONSUMER_KEY']
+    CONSUMER_SECRET = os.environ['CONSUMER_SECRET']
+    ACCESS_KEY = os.environ['ACCESS_KEY']
+    ACCESS_SECRET = os.environ['ACCESS_SECRET']
   
     auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
     auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
@@ -163,20 +163,19 @@ def self_identify(api):
 
 def self_identify_hub(api):
   # Identify the codebase for the bot:
-  line = 'This twitter bot for the Neotoma Paleoecological Database is programmed in #python and publically available through an MIT License on GitHub: https://github.com/SimonGoring/neotomabot'
+  line = 'This twitter bot for the Neotoma Paleoecological Database is programmed in #python and publicly available through an MIT License on GitHub: https://github.com/SimonGoring/neotomabot'
   try:
     print('%s' % line)
     api.update_status(status=line)
   except tweepy.error.TweepError:
     print("Twitter error raised")
-  
 
 api = twit_auth()
   
 schedule.every(3).hours.do(post_tweet, api)
 schedule.every().day.at("15:37").do(print_neotoma_update, api)
-schedule.every().day.at("14:30").do(self_identify, api)
-schedule.every().day.at("2:30").do(self_identify_hub, api)
+schedule.every().wednesday.at("14:30").do(self_identify, api)
+schedule.every().monday.at("14:30").do(self_identify_hub, api)
 
 while 1:
     schedule.run_pending()
