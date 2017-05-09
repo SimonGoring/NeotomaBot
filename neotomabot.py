@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 #!python3
 
-import tweepy, time, sys, json, requests, random, imp, datetime, schedule, time
+import os, tweepy, time, sys, json, requests, random, imp, datetime, schedule, time
 
 def twit_auth():
   #  Authenticate the twitter session.  Should only be needed once at the initiation of the code.
