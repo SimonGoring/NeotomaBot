@@ -11,6 +11,8 @@ A twitter bot to search for new records in the [Neotoma Paleoecology Database](h
 
 This program was an experiment to see how good my Python programming skills are.  Apparently they're okay.  The code could probably use some cleaning, but I'm generally happy with the way it turned out.
 
+The program runs on a free [Heroku](https://heroku.com) dyno and tweets semi-regularly.
+
 Requirements
 -----------------------------
 The program uses `tweepy`, `time`, `sys`, `json`, `requests`, `random` and `imp` package for Python, as well as the Neotoma [API](http://api.neotomadb.org/doc/about).  It was coded in Notepad++ because I wanted to try to do it quickly.
