@@ -56,4 +56,4 @@ docs/_build/
 # PyBuilder
 target/
 apikeys.txt
-NeotomaTwitterBot.ipynb
+test_neotoma.sh
