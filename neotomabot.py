@@ -179,8 +179,13 @@ def other_inf_hub(api):
           'We keep a list of all publications that have used Neotoma for their research.  Want to be added?  Contact us! https://www.neotomadb.org/references',
           'If you use #rstats then you can access Neotoma data directly thanks to @rOpenSci! https://ropensci.org/tutorials/neotoma_tutorial.html',
           'Neotoma is more than just pollen & mammals it contains 28 data types incl. phytoliths & biochemistry data. Explore! https://www.neotomadb.org/data/category/explorer',
-          'Think you\'ve got better tweets? Add them to my code & make a pull request! ttps://github.com/SimonGoring/neotomabot',
-          'This little bit of #scicomm is brought to you by @sjgoring and #NSFfunded by @nsf_geo & @earthcube.  Thanks for your support!']
+          'Think you\'ve got better tweets? Add them to my code & make a pull request! https://github.com/SimonGoring/neotomabot',
+          'This little bit of #scicomm is brought to you by @sjgoring and #NSFfunded by @nsf_geo & @earthcube.  Thanks for your support!',
+          '#AGU17 is coming up, you might be interested in this session on interdisciplinary geosciences! @earthcube @sjgoring https://agu.confex.com/agu/fm17/preliminaryview.cgi/Session26195',
+          'Interested in the future of integrating paleoecological data & models? Submit to: https://agu.confex.com/agu/fm17/preliminaryview.cgi/Session26532 #agu17 @AndriaEDawson',
+          'Behold, the very first Neotoma dataset, ID 1: https://apps.neotomadb.org/explorer/?datasetid=1',
+          'Is it a coincidence that the dataset ID for Devil\'s Lake WI is 666? Probably. . . https://apps.neotomadb.org/explorer/?datasetid=666',
+          'We\'ve got some new R tutorials up online.  Is there anything you\'d like to do with Neotoma? http://neotomadb.github.io']
 
   try:
     print('%s' % line)
@@ -195,7 +200,6 @@ schedule.every().day.at("15:37").do(print_neotoma_update, api)
 schedule.every().wednesday.at("14:30").do(self_identify, api)
 schedule.every().monday.at("14:30").do(self_identify_hub, api)
 schedule.every().day.at("10:30").do(other_inf_hub, api)
-
 
 while 1:
     schedule.run_pending()
