@@ -185,7 +185,9 @@ def other_inf_hub(api):
           'Interested in the future of integrating paleoecological data & models? Submit to: https://agu.confex.com/agu/fm17/preliminaryview.cgi/Session26532 #agu17 @AndriaEDawson',
           'Behold, the very first Neotoma dataset, ID 1: https://apps.neotomadb.org/explorer/?datasetid=1',
           'Is it a coincidence that the dataset ID for Devil\'s Lake WI is 666? Probably. . . https://apps.neotomadb.org/explorer/?datasetid=666',
-          'We\'ve got some new R tutorials up online.  Is there anything you\'d like to do with Neotoma? http://neotomadb.github.io']
+          'We\'ve got some new R tutorials up online.  Is there anything you\'d like to do with Neotoma? http://neotomadb.github.io',
+          'Find out more about Neotoma at #ESA2017 in @sjgoring\'s talk: https://eco.confex.com/eco/2017/webprogram/Paper67371.html',
+          'How can you use Neotoma to study abrupt vegetation change? Find out at #ESA2017: https://eco.confex.com/eco/2017/webprogram/Paper67706.html']
 
   try:
     print('%s' % line)
