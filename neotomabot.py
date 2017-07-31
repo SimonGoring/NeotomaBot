@@ -191,7 +191,7 @@ def other_inf_hub(api):
 
   try:
     print('%s' % line)
-    api.update_status(status=line[random.randint(0,8)])
+    api.update_status(status=line[random.randint(0,15)])
   except tweepy.error.TweepError:
     print("Twitter error raised")
 
