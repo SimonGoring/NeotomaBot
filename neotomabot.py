@@ -188,7 +188,7 @@ def other_inf_hub(api):
           'We\'ve got some new R tutorials up online.  Is there anything you\'d like to do with Neotoma? http://neotomadb.github.io',
           'Neotoma is a member of the @ICSU_WDS, working to share best practices for data stewardship.',
           'Are you presenting at an upcoming meeting?  Will you be talking about Neotoma?  Let us know and we can help get the word out! Contact @sjgoring',
-          'You know you want to slide into these mentions. . . Let us know what cool #pollen, #paleoecology, #archaeology, #whatever you\'re doing with Netoma data!'
+          'You know you want to slide into these mentions. . . Let us know what cool #pollen, #paleoecology, #archaeology, #whatever you\'re doing with Neotoma data!'
           ]
 
   try:
