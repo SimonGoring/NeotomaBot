@@ -182,15 +182,12 @@ def other_inf_hub(api):
           'Neotoma is more than just pollen & mammals; it contains 28 data types incl phytoliths & biochemistry data. Explore! https://www.neotomadb.org/data/category/explorer',
           'Think you\'ve got better tweets? Add them to my code & make a pull request! https://github.com/SimonGoring/neotomabot',
           'This little bit of #scicomm is brought to you by @sjgoring and #NSFfunded by @nsf_geo & @earthcube.  Thanks for your support!',
-          '#AGU17 is coming up, you might be interested in this session on interdisciplinary geosciences! @earthcube @sjgoring https://agu.confex.com/agu/fm17/preliminaryview.cgi/Session26195',
-          'Neotoma will be at #AGU17, check out @iceageecologist\'s poster on Monday Dec 11 from 13.40 - 18.00h. https://agu.confex.com/agu/fm17/meetingapp.cgi/Paper/236292',
           'Interested in the future of integrating paleoecological data & models? We are!  Come see more at #agu17 https://agu.confex.com/agu/fm17/preliminaryview.cgi/Session26532 @AndriaEDawson',
           'Behold, the very first Neotoma dataset, ID 1: https://apps.neotomadb.org/explorer/?datasetid=1',
           'Is it a coincidence that the dataset ID for Devil\'s Lake WI is 666? Probably. . . https://apps.neotomadb.org/explorer/?datasetid=666',
           'We\'ve got some new R tutorials up online.  Is there anything you\'d like to do with Neotoma? http://neotomadb.github.io',
           'Neotoma is a member of the @ICSU_WDS, working to share best practices for data stewardship.',
           'Are you presenting at an upcoming meeting?  Will you be talking about Neotoma?  Let us know and we can help get the word out! Contact @sjgoring',
-          'At #AGU17?  Interested in land cover change? @AndriaEDawson is talking about state-of-the-art vegetation reconstructions at centennial and millennial scales! https://agu.confex.com/agu/fm17/meetingapp.cgi/Paper/295037',
           'You know you want to slide into these mentions. . . Let us know what cool #pollen, #paleoecology, #archaeology, #whatever you\'re doing with Netoma data!'
           ]
 
