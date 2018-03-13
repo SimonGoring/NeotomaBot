@@ -182,18 +182,17 @@ def other_inf_hub(api):
           'Neotoma is more than just pollen & mammals; it contains 28 data types incl phytoliths & biochemistry data. Explore! https://www.neotomadb.org/data/category/explorer',
           'Think you\'ve got better tweets? Add them to my code & make a pull request! https://github.com/SimonGoring/neotomabot',
           'Behold, the very first Neotoma dataset, ID 1: https://apps.neotomadb.org/explorer/?datasetid=1',
-          'Is it a coincidence that the dataset ID for Devil\'s Lake WI is 666? Probably. . . https://apps.neotomadb.org/explorer/?datasetid=666',
           'We\'ve got some new R tutorials up online.  Is there anything you\'d like to do with Neotoma? http://neotomadb.github.io',
           'Neotoma is a member of the @ICSU_WDS, working to share best practices for data stewardship.',
           'Are you presenting at an upcoming meeting?  Will you be talking about Neotoma?  Let us know and we can help get the word out! Contact @sjgoring',
           'You know you want to slide into these mentions. . . Let us know what cool #pollen, #paleoecology, #archaeology, #whatever you\'re doing with Neotoma data!',
           'Referencing Neotoma?  Why not check out our Quaternary Research paper? https://doi.org/10.1017/qua.2017.105',
-
+          'How is Neotoma leveraging text mining to improve its data holdings? Find out on the @earthcube blog: https://earthcube.wordpress.com/2018/03/06/geodeepdive-into-darkdata/'
           ]
 
   try:
     print('%s' % line)
-    api.update_status(status=line[random.randint(0,15)])
+    api.update_status(status=line[random.randint(0,len(line))])
   except tweepy.error.TweepError:
     print("Twitter error raised")
 
