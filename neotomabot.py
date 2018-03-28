@@ -5,7 +5,8 @@
 import os, tweepy, time, sys, json, requests, random, imp, datetime, schedule, time, random
 
 def twit_auth():
-  #  Authenticate the twitter session.  Should only be needed once at the initiation of the code.
+  #  Authenticate the twitter session.  
+  #  Should only be needed once at the initiation of the code.
 
     CONSUMER_KEY = os.environ['CONSUMER_KEY']
     CONSUMER_SECRET = os.environ['CONSUMER_SECRET']
@@ -187,7 +188,10 @@ def other_inf_hub(api):
           'Are you presenting at an upcoming meeting?  Will you be talking about Neotoma?  Let us know and we can help get the word out! Contact @sjgoring',
           'You know you want to slide into these mentions. . . Let us know what cool #pollen, #paleoecology, #archaeology, #whatever you\'re doing with Neotoma data!',
           'Referencing Neotoma?  Why not check out our Quaternary Research paper? https://doi.org/10.1017/qua.2017.105',
-          'How is Neotoma leveraging text mining to improve its data holdings? Find out on the @earthcube blog: https://earthcube.wordpress.com/2018/03/06/geodeepdive-into-darkdata/'
+          'How is Neotoma leveraging text mining to improve its data holdings? Find out on the @earthcube blog: https://earthcube.wordpress.com/2018/03/06/geodeepdive-into-darkdata/',
+          'Attending CANQUA/AMQUA 2018 this August in Ottawa? Apply for a Lightning Talk in Session S6 - Reducing Time to Science by May 7, 2018! https://www.quaternary2018.com/ @earthcube @CANQUA_org',
+          'Using multi-proxy records, new statistical techniques or new networks of sites to do Quaternary paleoecology?  Talk about it at CANQUA/AMQUA 2018 in Session S7: https://www.quaternary2018.com/ @pal_EON  @CANQUA_org @INQUA_ECR',
+          'There will be a free one day workshop using Neotoma for research workflows and for storing and archiving data at CANQUA/AMQUA 2018: https://www.quaternary2018.com/ @earthcube @CANQUA_org @INQUA_ECR'
           ]
 
   try:
