@@ -1,0 +1,85 @@
+[{
+    "tweet": "The bot for the Neotoma Database is programmed in #python and publicly available through an MIT License on GitHub: https://github.com/SimonGoring/neotomabot",
+    "expires": null
+  },
+  {
+    "tweet": "Neotoma has teaching modules you can use in the class room, check it out: https://www.neotomadb.org/education/category/higher_ed/",
+    "expires": null
+  },
+  {
+    "tweet": "The governance for Neotoma includes representatives from our constituent databases. Find out more: https://www.neotomadb.org/about/category/governance",
+    "expires": null
+  },
+  {
+    "tweet": "We are invested in #cyberinfrastructure. Our response to emerging challenges is posted on @authorea: https://www.authorea.com/users/152134/articles/165940-cyberinfrastructure-in-the-paleosciences-mobilizing-long-tail-data-building-distributed-community-infrastructure-empowering-individual-geoscientists",
+    "expires": null
+  },
+  {
+    "tweet": "We keep a list of all publications that have used Neotoma for their research.  Want to be added?  Contact us! https://www.neotomadb.org/references",
+    "expires": null
+  },
+  {
+    "tweet": "These days everyone\'s got a Google Scholar page.  So does Neotoma!  https://scholar.google.ca/citations?user=idoixqkAAAAJ&hl=en",
+    "expires": null
+  },
+  {
+    "tweet": "If you use #rstats then you can access Neotoma data directly thanks to @rOpenSci! https://ropensci.org/tutorials/neotoma_tutorial.html",
+    "expires": null
+  },
+  {
+    "tweet": "Neotoma is more than just pollen & mammals; it contains 28 data types incl phytoliths & biochemistry data. Explore! https://www.neotomadb.org/data/category/explorer",
+    "expires": null
+  },
+  {
+    "tweet": "Think you\'ve got better tweets? Add them to my code & make a pull request! https://github.com/SimonGoring/neotomabot",
+    "expires": null
+  },
+  {
+    "tweet": "Behold, the very first Neotoma dataset, ID 1: https://apps.neotomadb.org/explorer/?datasetid=1",
+    "expires": null
+  },
+  {
+    "tweet": "We\'ve got some new R tutorials up online.  Is there anything you\"d like to do with Neotoma? http://neotomadb.github.io",
+    "expires": null
+  },
+  {
+    "tweet": "Neotoma is a member of the @ICSU_WDS, working to share best practices for data stewardship.",
+    "expires": null
+  },
+  {
+    "tweet": "Are you presenting at an upcoming meeting?  Will you be talking about Neotoma?  Let us know and we can help get the word out! Contact @sjgoring",
+    "expires": null
+  },
+  {
+    "tweet": "You know you want to slide into these mentions. . . Let us know what cool #pollen, #paleoecology, #archaeology, #whatever you\'re doing with Neotoma data!",
+    "expires": null
+  },
+  {
+    "tweet": "Referencing Neotoma?  Why not check out our Quaternary Research paper? https://doi.org/10.1017/qua.2017.105",
+    "expires": null
+  },
+  {
+    "tweet": "How is Neotoma leveraging text mining to improve its data holdings? Find out on the @earthcube blog: https://earthcube.wordpress.com/2018/03/06/geodeepdive-into-darkdata/",
+    "expires": null
+  },
+  {
+    "tweet": "Attending CANQUA/AMQUA 2018 this August in Ottawa? Apply for a Lightning Talk in Session S6 - Reducing Time to Science by May 7, 2018! https://www.quaternary2018.com/ @earthcube @CANQUA_org",
+    "expires": "2018-08-20"
+  },
+  {
+    "tweet": "Using multi-proxy records, new statistical techniques or new networks of sites to do Quaternary paleoecology?  Talk about it at CANQUA/AMQUA 2018 in Session S7: https://www.quaternary2018.com/ @pal_EON @CANQUA_org @INQUA_ECR",
+    "expires": "2018-08-20"
+  },
+  {
+    "tweet": "There will be a free one day workshop using Neotoma for research workflows and for storing and archiving data at CANQUA/AMQUA 2018: https://www.quaternary2018.com/ @earthcube @CANQUA_org @INQUA_ECR",
+    "expires": "2018-08-20"
+  },
+  {
+    "tweet": "The landing pages for Neotoma were built using Vue.js, all code is published on Github at https://github.com/NeotomaDB/ndbLandingPage",
+    "expires": null
+  },
+  {
+    "tweet": "Building an application that could leverage Neotoma data?  Our API (https://api-dev.neotomadb.org) is public and open: https://github.com/NeotomaDB/api_nodetest/",
+    "expires": null
+  }
+]

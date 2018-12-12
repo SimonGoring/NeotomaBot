@@ -5,21 +5,21 @@
 import os, tweepy, time, sys, json, requests, random, imp, datetime, schedule, time, random
 
 def twit_auth():
-  #  Authenticate the twitter session.  
+  #  Authenticate the twitter session.
   #  Should only be needed once at the initiation of the code.
 
     CONSUMER_KEY = os.environ['CONSUMER_KEY']
     CONSUMER_SECRET = os.environ['CONSUMER_SECRET']
     ACCESS_KEY = os.environ['ACCESS_KEY']
     ACCESS_SECRET = os.environ['ACCESS_SECRET']
-  
+
     auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
     auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
     api = tweepy.API(auth)
     print('Twitter authenticated \n')
     return api
-  
-  
+
+
 def check_neotoma():
     # This function call to neotoma, reads a text file, compares the two
     # and then outputs all the 'new' records to a different text file.
@@ -32,10 +32,10 @@ def check_neotoma():
 
     with open('old_results.json', 'r') as old_file:
         old_calls = json.loads(old_file.read())
-    
+
     with open('to_print.json', 'r')    as print_file:
         to_print  = json.loads(print_file.read())
-    
+
     neotoma  = requests.get("http://ceiwin10.cei.psu.edu/NDB/RecentUploads?months=1")
     inp_json = json.loads(neotoma.text)['data']
 
@@ -48,7 +48,7 @@ def check_neotoma():
     neo_datasets = get_datasets(inp_json)
     old_datasets = get_datasets(old_calls)
     new_datasets = get_datasets(to_print)
-    
+
     #  So this works
     #  We now have the numeric dataset IDs for the most recent month of
     #  new files to neotoma (neo_datasets), all the ones we've already tweeted
@@ -72,7 +72,7 @@ def check_neotoma():
     #  is not in old_datasets or neo_datasets gets added to the beginning of
     #  the new list.  This way it is always the first called up when twitter
     #  posts:
-    
+
     for i in range(0, len(new_datasets)-1):
         if new_datasets[i] not in old_datasets and new_datasets[i] not in neo_datasets:
             inp_json.insert(0,to_print[i])
@@ -87,10 +87,10 @@ def check_neotoma():
 def print_neotoma_update(api):
   # Check for new records by using the neotoma "recent" API:
   old_toprint = check_neotoma()
-  
+
   # load files:
   with open('to_print.json', 'r') as print_file:
-    to_print  = json.loads(print_file.read())  
+    to_print  = json.loads(print_file.read())
   with open('old_results.json', 'r') as print_file:
     old_files  = json.loads(print_file.read())
 
@@ -102,43 +102,43 @@ def print_neotoma_update(api):
     line = "I've got a backlog of " + str(len(to_print)) + " sites to tweet and " + str(old_toprint) + " sites have been added since I last checked Neotoma. http://neotomadb.org"
   else:
     line = "I've got a backlog of " + str(len(to_print)) + " sites to tweet.  Nothing new has been added since I last checked. http://neotomadb.org"
-  
+
   print('%s' % line)
   try:
     print('%s' % line)
     api.update_status(status=line)
   except tweepy.error.TweepError:
     print("Twitter error raised")
-    
+
 def post_tweet(api):
   # Read in the printable tweets:
   with open('to_print.json', 'r') as print_file:
     to_print  = json.loads(print_file.read())
-      
+
   with open('old_results.json', 'r') as print_file:
     old_files  = json.loads(print_file.read())
-    
+
   print('Files opened\n')
-  
+
   pr_tw = random.randint(0,len(to_print) - 1)
   site  = to_print[pr_tw]
 
   #  Get ready to print the first [0] record in to_print:
   weblink = 'http://apps.neotomadb.org/Explorer/?datasetid=' + str(site["DatasetID"])
-    
+
   #  The datasets have long names.  I want to match to simplify:
-        
+
   line = 'Neotoma welcomes ' + site["SiteName"] + ', a ' + site["DatasetType"] + ' dataset by ' + site["Investigator"] + " " + weblink
-    
+
   #  There's a few reasons why the name might be very long, one is the site name, the other is the author name:
   if len(line) > 170:
     line = 'Neotoma welcomes ' + site["SiteName"] + " by " + site["Investigator"] + " " + weblink
-  
+
   #  If it's still too long then clip the author list:
   if len(line) > 170 & site["Investigator"].find(','):
     author = site["Investigator"][0:to_print[0]["Investigator"].find(',')]
-    line = 'Neotoma welcomes ' + site["SiteName"] + " by " + author + " et al. " + weblink  
-    
+    line = 'Neotoma welcomes ' + site["SiteName"] + " by " + author + " et al. " + weblink
+
   try:
     print('%s' % line)
     api.update_status(status=line)
@@ -151,7 +151,7 @@ def post_tweet(api):
   except tweepy.error.TweepError:
     print("Twitter error raised")
 
-          
+
 def self_identify(api):
 
   # Identify myself as the owner of the bot:
@@ -189,9 +189,9 @@ def other_inf_hub(api):
           'You know you want to slide into these mentions. . . Let us know what cool #pollen, #paleoecology, #archaeology, #whatever you\'re doing with Neotoma data!',
           'Referencing Neotoma?  Why not check out our Quaternary Research paper? https://doi.org/10.1017/qua.2017.105',
           'How is Neotoma leveraging text mining to improve its data holdings? Find out on the @earthcube blog: https://earthcube.wordpress.com/2018/03/06/geodeepdive-into-darkdata/',
-          'Attending CANQUA/AMQUA 2018 this August in Ottawa? Apply for a Lightning Talk in Session S6 - Reducing Time to Science by May 7, 2018! https://www.quaternary2018.com/ @earthcube @CANQUA_org',
-          'Using multi-proxy records, new statistical techniques or new networks of sites to do Quaternary paleoecology?  Talk about it at CANQUA/AMQUA 2018 in Session S7: https://www.quaternary2018.com/ @pal_EON  @CANQUA_org @INQUA_ECR',
-          'There will be a free one day workshop using Neotoma for research workflows and for storing and archiving data at CANQUA/AMQUA 2018: https://www.quaternary2018.com/ @earthcube @CANQUA_org @INQUA_ECR'
+          "Building an application that could leverage Neotoma data?  Our API (https://api-dev.neotomadb.org) is public and open: https://github.com/NeotomaDB/api_nodetest/",
+          "The landing pages for Neotoma were built using Vue.js, all code is published on Github at https://github.com/NeotomaDB/ndbLandingPage",
+          "Learn more about how Neotoma makes the most of teaching and cutting-edge research in a new publication in Elements of Paleontology: http://dx.doi.org/10.1017/9781108681582"
           ]
 
   try:
@@ -201,7 +201,7 @@ def other_inf_hub(api):
     print("Twitter error raised")
 
 api = twit_auth()
-  
+
 schedule.every(3).hours.do(post_tweet, api)
 schedule.every().day.at("15:37").do(print_neotoma_update, api)
 schedule.every().wednesday.at("14:30").do(self_identify, api)
