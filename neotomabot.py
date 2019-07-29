@@ -191,7 +191,8 @@ def other_inf_hub(api):
           'How is Neotoma leveraging text mining to improve its data holdings? Find out on the @earthcube blog: https://earthcube.wordpress.com/2018/03/06/geodeepdive-into-darkdata/',
           "Building an application that could leverage Neotoma data?  Our API (https://api-dev.neotomadb.org) is public and open: https://github.com/NeotomaDB/api_nodetest/",
           "The landing pages for Neotoma were built using Vue.js, all code is published on Github at https://github.com/NeotomaDB/ndbLandingPage",
-          "Learn more about how Neotoma makes the most of teaching and cutting-edge research in a new publication in Elements of Paleontology: http://dx.doi.org/10.1017/9781108681582"
+          "Learn more about how Neotoma makes the most of teaching and cutting-edge research in a new publication in Elements of Paleontology: http://dx.doi.org/10.1017/9781108681582",
+          "Attending #2019SVP in Brisbane? Make sure to sign up for the Neotoma workshop (http://vertpaleo.org/Annual-Meeting/Workshops.aspx) and check out all the new developments in the Neotoma database and how we’re storing and curating vertebrate data, including specimens, dates, & isotopes!"
           ]
 
   try:
