@@ -83,7 +83,6 @@ def check_neotoma():
         json.dump(inp_json, print_file)
     return len(inp_json) - len(to_print)
 
-
 def print_neotoma_update(api):
   # Check for new records by using the neotoma "recent" API:
   old_toprint = check_neotoma()
@@ -191,7 +190,8 @@ def other_inf_hub(api):
           'How is Neotoma leveraging text mining to improve its data holdings? Find out on the @earthcube blog: https://earthcube.wordpress.com/2018/03/06/geodeepdive-into-darkdata/',
           "Building an application that could leverage Neotoma data?  Our API (https://api-dev.neotomadb.org) is public and open: https://github.com/NeotomaDB/api_nodetest/",
           "The landing pages for Neotoma were built using Vue.js, all code is published on Github at https://github.com/NeotomaDB/ndbLandingPage",
-          "Learn more about how Neotoma makes the most of teaching and cutting-edge research in a new publication in Elements of Paleontology: http://dx.doi.org/10.1017/9781108681582"
+          "Learn more about how Neotoma makes the most of teaching and cutting-edge research in a new publication in Elements of Paleontology: http://dx.doi.org/10.1017/9781108681582",
+          "Neotoma is on Slack. Come join the discussion and get involved! We're looking for folks to help with documentation, stewardship and coding. https://join.slack.com/t/neotomadb/shared_invite/zt-cvsv53ep-wjGeCTkq7IhP6eUNA9NxYQ"
           ]
 
   try:
